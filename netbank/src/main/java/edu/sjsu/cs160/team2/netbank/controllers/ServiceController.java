@@ -13,7 +13,14 @@ import edu.sjsu.cs160.team2.netbank.models.*;
 public class ServiceController {
     @Autowired
     private AccountRepository accountRepository;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private TransactionRepository transactionRepository;
     
+    // TODO: restrict to admins only or only retrieve user's accounts
     @GetMapping("/accounts")
     public List<Account> getAccounts() {
         List<Account> allAccounts = accountRepository.findAll();
@@ -21,14 +28,20 @@ public class ServiceController {
         return allAccounts;
     }
 
-    @PostMapping("/account")
-    public Account postAccount() {
-        Account account = Account.builder()
-                                 .name("austin")
-                                 .dollars(123)
-                                 .cents(55)
-                                 .build();
-        System.out.println("[POST: /api/account] Created account: " + account);
-        return accountRepository.save(account);
+    // TODO: restrict to admins only
+    @PostMapping("/create-user")
+    public User postUser(@RequestBody User user) {
+        return userRepository.save(user);
+    }
+
+    @GetMapping("/account/{id}/transaction")
+    public List<Transaction> getTransactions(@PathVariable String id) {
+        return transactionRepository.findAllByAccountId(id);
+    }
+
+    @PostMapping("/account/{id}/transaction")
+    public Transaction postTransaction(@PathVariable String id, @RequestBody Transaction transaction) {
+        transaction.setAccount(accountRepository.findById(id).get());
+        return transactionRepository.save(transaction);
     }
 }

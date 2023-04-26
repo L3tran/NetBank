@@ -1,25 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
+import Front from './front/FrontPage';
+import Login from './login/LoginPage';
+import Register from './registration/RegisterPage';
+import Dashboard from './dashboard/Dashboard';
 
-function App() {
+import Pay from './payment/Payment';
+import Transaction from './transaction/Transaction';
+import Statement from './statement/Statement';
+import Open from './open/Open';
+
+import './index.css';
+
+export default function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> 1and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Front />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/dashboard/pay" element={<Pay />} />
+        <Route path="/dashboard/transactions" element={<Transaction />} />
+        <Route path="/dashboard/statements" element={<Statement />} />
+        <Route path="/dashboard/new-account" element={<Open />} />
+        <Route path="*" element={<Navigate to="/" />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
-
-export default App;
