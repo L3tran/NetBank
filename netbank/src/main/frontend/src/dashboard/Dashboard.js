@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './dashboard.css';
 import AccountSummary from '../AccountSummary/AccountSummary';
+import MapPage from '../maps/MapPage';
 
 const dashboardData = {
   accounts: [
@@ -52,6 +53,10 @@ const Dashboard = () => {
     navigate('/dashboard/new-account');
   };
 
+  const handleMapsClick = () => {
+    navigate('/dashboard/maps');
+  };
+
   return (
     <div className="dashboard">
       <nav className="navigation">
@@ -71,7 +76,7 @@ const Dashboard = () => {
             <button onClick={handleNewAccountClick}>Open Account</button>
           </li>
           <li>
-            <button onClick={handlePaymentsClick}>Maps</button>
+            <button onClick={handleMapsClick}>Maps</button>
           </li>
         </ul>
       </nav>
